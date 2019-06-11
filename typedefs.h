@@ -3,7 +3,7 @@
 
 #include <bits/stdint-uintn.h>
 
-namespace gfx{
+namespace rtx{
     
 typedef double dtype;
 typedef uint32_t utype;
