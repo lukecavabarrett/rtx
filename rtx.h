@@ -13,6 +13,7 @@ class color_rgb;
 class ray3;
 class scene_object;
 class scene;
+class screen;
 };
 
 //include all .h files
@@ -22,5 +23,6 @@ class scene;
 #include "ray3.h"
 #include "scene_object.h"
 #include "scene.h"
+#include "screen.h"
 
 #endif
