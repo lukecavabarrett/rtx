@@ -1,4 +1,4 @@
-#include "rtx.h"
+#include "src/rtx.h"
 #include <bits/stdc++.h>
 
 
@@ -73,5 +73,8 @@ int main() {
 int main() {
     rtx::screen w(800,600);
     for(int y=0;y<w.size_y();y++)for(int x=0;x<w.size_x();x++)w.put_pixel(y,x,x^y);
+    rtx::scene s(rtx::color_rgb::from_rgb(0x555555),rtx::color_rgb::from_rgb(0x555555));
+    rtx::camera c(rtx::vector3(0),rtx::vector3(0,0,1),rtx::vector3(0,1,0),800,600);
+    c.render_screen(w,s);
     w.wait_key("Q");
 }
