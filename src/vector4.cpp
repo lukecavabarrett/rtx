@@ -1,5 +1,4 @@
-#include "vector4.h"
-#include "color_rgb.h"
+#include "rtx.h"
 #include <cstdlib>
 #include <cmath>
 namespace rtx{

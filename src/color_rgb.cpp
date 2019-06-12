@@ -1,4 +1,4 @@
-#include "color_rgb.h"
+#include "rtx.h"
 #include <cstdlib>
 #include <cmath>
 #include <iomanip>

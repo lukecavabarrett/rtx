@@ -1,4 +1,4 @@
-#include "vector3.h"
+#include "rtx.h"
 #include <cstdlib>
 #include <cmath>
 namespace rtx{
@@ -8,6 +8,7 @@ vector3::vector3(dtype xp,dtype yp,dtype zp) : x(xp), y(yp), z(zp) {}
 vector3::vector3(const vector3& o) : x(o.x), y(o.y), z(o.z) {}
 
 dtype vector3::magnitude() const {return std::sqrt(x*x+y*y+z*z);}
+dtype vector3::magnitude2() const {return x*x+y*y+z*z;}
 vector3 vector3::operator+(const vector3& o) const {return vector3(x+o.x,y+o.y,z+o.z);}
 void vector3::operator+=(const vector3& o){x+=o.x;y+=o.y;z+=o.z;}
 vector3 vector3::operator-(const vector3& o) const {return vector3(x-o.x,y-o.y,z-o.z);}

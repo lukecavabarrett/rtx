@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "rtx.h"
 #include <cstdlib>
 #include <cmath>
 namespace rtx{

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include "rtx.h"
+#include "typedefs.h"
 #include <math.h>
 
 namespace rtx{

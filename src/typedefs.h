@@ -9,5 +9,17 @@ typedef double dtype;
 typedef uint32_t utype;
 typedef int stype;
 
+class vector3;
+class vector4;
+class color_rgb;
+class ray3;
+class scene_object;
+class scene;
+class screen;
+class camera;
+class sphere;
+
 };
+
+
 #endif

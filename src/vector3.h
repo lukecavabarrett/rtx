@@ -14,6 +14,7 @@ public:
     vector3(dtype xp,dtype yp,dtype zp);
     vector3(const vector3& o);
     dtype magnitude() const;
+    dtype magnitude2() const;
     
     vector3 operator+(const vector3& o) const ;
     void operator+=(const vector3& o);

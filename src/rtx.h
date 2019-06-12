@@ -3,19 +3,6 @@
 
 #include "typedefs.h"
 
-namespace rtx{
-
-//forward declarate all classes
-
-class vector3;
-class vector4;
-class color_rgb;
-class ray3;
-class scene_object;
-class scene;
-class screen;
-class camera;
-};
 
 //include all .h files
 #include "vector3.h"
@@ -26,5 +13,6 @@ class camera;
 #include "scene.h"
 #include "screen.h"
 #include "camera.h"
+#include "sphere.h"
 
 #endif

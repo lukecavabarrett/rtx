@@ -2,7 +2,6 @@
 #define	COLOR_RGB_H
 
 #include "typedefs.h"
-#include "vector3.h"
 #include <iostream>
 namespace rtx{
 class color_rgb : public vector3
@@ -17,6 +16,7 @@ private:
     static int to_byte(dtype v);
 public:
     color_rgb (const vector3& v);
+    //color_rgb (dtype r,dtype g,dtype b);
     int to_rgb() const;
     static color_rgb from_rgb(int w);
     int to_rgb_le() const; 

@@ -1,4 +1,4 @@
-#include "ray3.h"
+#include "rtx.h"
 #include <cstdlib>
 #include <cmath>
 namespace rtx{

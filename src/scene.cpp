@@ -1,4 +1,4 @@
-#include "scene.h"
+#include "rtx.h"
 #include <cstdlib>
 #include <cmath>
 #include <tuple>

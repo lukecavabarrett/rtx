@@ -2,8 +2,6 @@
 #define _INCLUDE_VECTOR4_H_
 
 #include "typedefs.h"
-#include "vector3.h"
-#include "color_rgb.h"
 #include <iostream>
 namespace rtx{
 class vector4

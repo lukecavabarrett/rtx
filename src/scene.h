@@ -4,10 +4,6 @@
 #include <iostream>
 #include <vector>
 #include "typedefs.h"
-#include "vector3.h"
-#include "color_rgb.h"
-#include "ray3.h"
-#include "scene_object.h"
 
 namespace rtx{
     class scene{

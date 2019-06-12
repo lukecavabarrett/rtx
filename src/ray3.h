@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "typedefs.h"
-#include "vector3.h"
 namespace rtx{
 class ray3
 {
