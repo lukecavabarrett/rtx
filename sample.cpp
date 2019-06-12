@@ -1,9 +1,9 @@
 #include "src/rtx.h"
 //#include <bits/stdc++.h>
 
-
-
 /*
+
+
 //abstract class
 class obj{
 public:
@@ -51,11 +51,15 @@ T internal;
 int mul;
 public:
 template <typename... Ts>
-decB(int m,Ts&&... args) : internal(std::forward<Ts>(args)...),mul(m) {}
+decB(int m,Ts&&... args);
 
 int f() {return internal.f()*mul;}
 
 };
+
+template<typename T>
+template<typename... Ts>
+decB<T>::decB(int m,Ts&&... args)  : internal(std::forward<Ts>(args)...),mul(m) {}
 
 
 
@@ -74,14 +78,9 @@ int main() {
     //for(int y=0;y<w.size_y();y++)for(int x=0;x<w.size_x();x++)w.put_pixel(y,x,x^y);
     rtx::scene s(rtx::color_rgb::from_rgb(0x555555),rtx::color_rgb::from_rgb(0x555555));
     
-    rtx::scene_object * sph = (rtx::scene_object*)new rtx::sphere(rtx::vector3(0.55,-0.16, 3.5),0.5);
-    rtx::ray3 r(rtx::vector3(0,0,0),rtx::vector3(0,0,1));
-    std::cout<<sph->intersection_with(r).first<<std::endl;
-    
-    return 0;
     rtx::screen w(800,600);
     
-    s.add((rtx::scene_object*)new rtx::sphere(rtx::vector3(0.55,-0.16, 3.5),0.5));
+    s.add((rtx::scene_object*)new rtx::solid_color<rtx::sphere>(rtx::color_rgb::from_rgb(0x5500ff),rtx::vector3(0.55,-0.16, 3.5),0.5));
     //s.add(new rtx::scene_object());
     rtx::camera c(rtx::vector3(0),rtx::vector3(0,0,1),rtx::vector3(0,1,0),800,600);
     c.render_screen(w,s);

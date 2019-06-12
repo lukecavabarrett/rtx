@@ -18,6 +18,7 @@ class scene;
 class screen;
 class camera;
 class sphere;
+template<typename T> class solid_color;
 
 };
 

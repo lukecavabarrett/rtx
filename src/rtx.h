@@ -14,5 +14,6 @@
 #include "screen.h"
 #include "camera.h"
 #include "sphere.h"
+#include "solid_color.h"
 
 #endif
