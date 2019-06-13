@@ -15,7 +15,7 @@ namespace rtx{
         const std::vector<scene_object*>& objects() const;
         const std::vector<light*>& lights() const;
         void add(scene_object* p);
-        //TODO add light
+        void add(light* p);
         std::tuple<dtype,vector3,scene_object*> cast_ray(const ray3& r) const;
         color_rgb trace(const ray3& r,int bounces=0) const;
         

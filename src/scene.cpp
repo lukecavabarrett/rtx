@@ -8,6 +8,7 @@ namespace rtx{
     const std::vector<scene_object*>& scene::objects() const {return obj_vp;}
     const std::vector<light*>& scene::lights() const {return lgt_vp;}
     void scene::add(scene_object *p){obj_vp.push_back(p);}
+    void scene::add(light *p){lgt_vp.push_back(p);}
     std::tuple<dtype,vector3,scene_object*> scene::cast_ray(const ray3& r) const {
         dtype best_dst=std::numeric_limits<dtype>::infinity();
         vector3 best_v3(0);
