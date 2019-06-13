@@ -9,7 +9,7 @@ typedef double dtype;
 typedef uint32_t utype;
 typedef int stype;
 
-constexpr dtype eps = 10e-16;
+constexpr dtype eps = 10e-12;
 
 class vector3;
 class vector4;
@@ -23,6 +23,7 @@ class sphere;
 template<typename T> class solid_color;
 class light;
 class sun_light;
+template<typename T> class phong_color;
 };
 
 

@@ -76,12 +76,13 @@ int main() {
 
 int main() {
     //for(int y=0;y<w.size_y();y++)for(int x=0;x<w.size_x();x++)w.put_pixel(y,x,x^y);
-    rtx::scene s(rtx::color_rgb::from_rgb(0x555555),rtx::color_rgb::from_rgb(0x555555));
+    rtx::scene s(rtx::color_rgb(0.1),rtx::color_rgb(0.01));
     
     rtx::screen w(800,600);
     
-    s.add((rtx::scene_object*)new rtx::solid_color<rtx::sphere>(rtx::color_rgb::from_rgb(0x5500ff),rtx::vector3(0.55,-0.16, 3.5),0.5));
-    //s.add(new rtx::scene_object());
+    //s.add(new rtx::solid_color<rtx::sphere>(rtx::color_rgb::from_rgb(0x5500ff),rtx::vector3(0.55,-0.16, 3.5),0.5));
+    s.add(new rtx::phong_color<rtx::sphere>(rtx::color_rgb::from_rgb(0x0000ff)*0.2,rtx::color_rgb::from_rgb(0x0000ff)*0.08,rtx::color_rgb(0.1),20.0,rtx::vector3(0.55,-0.16, 3.5),0.5));
+    s.add(new rtx::sun_light(rtx::vector3(0.5,-2,1),rtx::color_rgb(1)));
     rtx::camera c(rtx::vector3(0),rtx::vector3(0,0,1),rtx::vector3(0,1,0),800,600);
     c.render_screen(w,s);
     w.wait_key("Q");

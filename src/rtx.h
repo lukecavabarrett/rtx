@@ -17,5 +17,6 @@
 #include "solid_color.h"
 #include "light.h"
 #include "sun_light.h"
+#include "phong_color.h"
 
 #endif

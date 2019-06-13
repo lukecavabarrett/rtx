@@ -38,12 +38,13 @@ namespace rtx{
         for(light* l:s.lights()){
             color_rgb il = l->illuminate(s,this,p);
             if(il.magnitude2()<eps)continue;
-            vector3 vl = -l->get_incident_at(p);
+            vector3 vl = -(l->get_incident_at(p));
             //diffuse component
             c+=il*color_diffuse*std::max<dtype>(0,n.dot(vl));
             //specular component
-            vector3 vr = vl - n*(n.dot(vl))*2;
-            c+=il*color_specular*std::pow(std::max<dtype>(0,vw.dot(vl)),alpha);
+            vector3 vr = n*(n.dot(vl))*2 - vl;
+            vr.normalise();
+            c+=il*color_specular*std::pow(std::max<dtype>(0,vw.dot(vr)),alpha);
         }
         return c;
     }
