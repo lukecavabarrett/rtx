@@ -15,5 +15,7 @@
 #include "camera.h"
 #include "sphere.h"
 #include "solid_color.h"
+#include "light.h"
+#include "sun_light.h"
 
 #endif

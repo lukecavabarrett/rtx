@@ -32,6 +32,10 @@ namespace rtx{
         return color;
     }
     
+    virtual uint64_t instance_id() const override {
+        return internal.instance_id();
+    }
+    
     };
 };
 #endif

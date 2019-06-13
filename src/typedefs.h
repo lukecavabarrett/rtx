@@ -19,7 +19,8 @@ class screen;
 class camera;
 class sphere;
 template<typename T> class solid_color;
-
+class light;
+class sun_light;
 };
 
 

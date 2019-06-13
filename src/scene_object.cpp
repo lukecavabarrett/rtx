@@ -15,4 +15,7 @@ namespace rtx{
     color_rgb scene_object::trace(const vector3& p, const ray3& r, const scene& s, int bounces) const {
         return color_rgb(0);
     };
+    uint64_t scene_object::instance_id() const {
+        return (uint64_t) this;
+    }
 };
