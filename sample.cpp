@@ -81,10 +81,10 @@ int main() {
     rtx::screen w(800,600);
     
     //s.add(new rtx::solid_color<rtx::sphere>(rtx::color_rgb::from_rgb(0x5500ff),rtx::vector3(0.55,-0.16, 3.5),0.5));
+    s.add(new rtx::reflect<rtx::phong_color<rtx::sphere>>(0.8,rtx::color_rgb::from_rgb(0xff000)*0.2,rtx::color_rgb::from_rgb(0xff000)*0.08,rtx::color_rgb(0.1),20.0,rtx::vector3(0.00,0.16, 4.5),0.3));
     s.add(new rtx::phong_color<rtx::sphere>(rtx::color_rgb::from_rgb(0x0000ff)*0.2,rtx::color_rgb::from_rgb(0x0000ff)*0.08,rtx::color_rgb(0.1),20.0,rtx::vector3(0.55,-0.16, 3.5),0.5));
-    rtx::phong_color<rtx::sphere>(rtx::color_rgb::from_rgb(0x0000ff)*0.2,rtx::color_rgb::from_rgb(0x0000ff)*0.08,rtx::color_rgb(0.1),20.0,rtx::vector3(0.55,-0.16, 3.5),0.5));
     s.add(new rtx::sun_light(rtx::vector3(0.5,-2,1),rtx::color_rgb(1)));
-    rtx::camera c(rtx::vector3(0),rtx::vector3(0,0,1),rtx::vector3(0,1,0),800,600);
+    rtx::camera c(rtx::vector3(0),rtx::vector3(0,0,1),rtx::vector3(0,1,0),800,600,45.0,2);
     c.render_screen(w,s);
     w.wait_key("Q");
 }

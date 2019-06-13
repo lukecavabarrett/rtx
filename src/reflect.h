@@ -32,12 +32,12 @@ namespace rtx{
         
         if(bounces){
             vector3 n = get_normal_at(p);
-            vector3 vr = n*(n.dot(r.d))*2 - r.d;
+            vector3 vr = r.d - n*(n.dot(r.d))*2;
             vr.normalise();
             ray3 ref(p+vr*eps,vr);
-            return internal.color_rgb(p,r,s,bounces)*(1-rate)+s.trace(ref,bounces-1)*rate;
+            return internal.trace(p,r,s,bounces)*(1-rate)+s.trace(ref,bounces-1)*rate;
         } else {
-            return internal.color_rgb(p,r,s,bounces);
+            return internal.trace(p,r,s,bounces);
         }
     }
     
