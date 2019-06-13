@@ -10,7 +10,7 @@ namespace rtx{
         return direction;
     }
     color_rgb sun_light::illuminate(const scene& s,const scene_object* o,const vector3& v) const {
-        if(std::get<2>(s.cast_ray(ray3(v,-direction)))==nullptr)return color;
+        if(std::get<2>(s.cast_ray(ray3(v-direction*eps,-direction)))==nullptr)return color;
         return color_rgb(0);
     }
 };

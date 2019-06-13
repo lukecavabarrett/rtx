@@ -9,6 +9,8 @@ typedef double dtype;
 typedef uint32_t utype;
 typedef int stype;
 
+constexpr dtype eps = 10e-16;
+
 class vector3;
 class vector4;
 class color_rgb;

@@ -6,6 +6,7 @@
 namespace rtx{
     scene::scene(const color_rgb& ambient,const color_rgb& background) : ambient_color(ambient), background_color(background) {}
     const std::vector<scene_object*>& scene::objects() const {return obj_vp;}
+    const std::vector<light*>& scene::lights() const {return lgt_vp;}
     void scene::add(scene_object *p){obj_vp.push_back(p);}
     std::tuple<dtype,vector3,scene_object*> scene::cast_ray(const ray3& r) const {
         dtype best_dst=std::numeric_limits<dtype>::infinity();
