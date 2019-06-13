@@ -18,5 +18,6 @@
 #include "light.h"
 #include "sun_light.h"
 #include "phong_color.h"
+#include "reflect.h"
 
 #endif

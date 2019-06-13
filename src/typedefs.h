@@ -24,6 +24,7 @@ template<typename T> class solid_color;
 class light;
 class sun_light;
 template<typename T> class phong_color;
+template<typename T> class reflect;
 };
 
 
