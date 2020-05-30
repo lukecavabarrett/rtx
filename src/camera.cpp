@@ -24,21 +24,21 @@ camera::camera(const vector3 &p, const vector3 &d, const vector3 &v, int w, int 
   x_step_m = width_m / width_px;
   y_step_m = height_m / height_px;
 }
-ray3 camera::cast_ray(int x, int y) {
+ray3 camera::cast_ray(int x, int y) const {
   dtype x_pos = (x_step_m - width_m) / 2 + x * x_step_m;
   dtype y_pos = (y_step_m + height_m) / 2 - y * y_step_m;
-  return ray3(position, (depth + vertical * y_pos + depth.cross(vertical) * x_pos - position).normalised());
+  return ray3(position, (depth + vertical * y_pos + depth.cross(vertical) * x_pos).normalised());
 }
-ray3 camera::cast_ray(dtype x, dtype y) {
+ray3 camera::cast_ray(dtype x, dtype y) const {
   dtype x_pos = (x_step_m - width_m) / 2 + x * x_step_m;
   dtype y_pos = (y_step_m + height_m) / 2 - y * y_step_m;
-  return ray3(position, (depth + vertical * y_pos + depth.cross(vertical) * x_pos - position).normalised());
+  return ray3(position, (depth + vertical * y_pos + depth.cross(vertical) * x_pos).normalised());
 }
-color_rgb camera::get_pixel(int x, int y, const scene &s) {
+color_rgb camera::get_pixel(int x, int y, const scene &s) const {
   return s.trace(cast_ray(x, y), bounces);
 }
 
-color_rgb camera::get_pixel(double x, double y, const scene &s) {
+color_rgb camera::get_pixel_d(double x, double y, const scene &s) const {
   return s.trace(cast_ray(x, y), bounces);
 }
 void camera::render_screen(screen &scr, const scene &s) {
@@ -102,8 +102,8 @@ struct square {
 
   bool splittable() const { return size > pixel_size; }
 };
-template<typename _Callable, typename OutIt>
-void split(square source,std::mt19937 &gen, _Callable getp, OutIt begin, OutIt end) {
+template< typename OutIt>
+void split(square source,const camera *cmr,const scene *scr , OutIt begin, OutIt end) {
   assert(source.size > pixel_size);
   bool plus_y = false, plus_x = false;
   vector3 mean = 0;
@@ -115,9 +115,9 @@ void split(square source,std::mt19937 &gen, _Callable getp, OutIt begin, OutIt e
     if (plus_y)s.y += s.size;
     if (s.sx < s.x || s.sx >= s.x + s.size || s.sy < s.y || s.sy >= s.y + s.size) {
       //regenerate
-      s.sx = s.x + std::uniform_int_distribution<>(0, s.size - 1)(gen);
-      s.sy = s.y + std::uniform_int_distribution<>(0, s.size - 1)(gen);
-      s.color = getp(s.sx, s.sy);
+      s.sx = s.x + (rand()&(s.size-1));
+      s.sy = s.y + (rand()&(s.size-1));
+      s.color = cmr->get_pixel_d(s.sx / adt::pixel_size, s.sy / adt::pixel_size, *scr);
     }
     mean += s.color;
     s.score = 0;
@@ -143,7 +143,7 @@ std::tuple<std::promise<void>, std::future<size_t>> camera::render_screen_2(scre
   //static std::uniform_real_distribution<> dis(0.0, 1.0);
 
   std::promise<void> p;
-  std::future<size_t> f = std::async([this, &scr, &s, wire, fut = p.get_future()]() {
+  std::future<size_t> f = std::async([this, &scr, &s, wire, fut = p.get_future()]() -> size_t {
     size_t square_size = 1;
     size_t r = 0;
     while ((height_px % (square_size << 1) == 0) && (width_px % (square_size << 1) == 0))square_size <<= 1;
@@ -153,43 +153,34 @@ std::tuple<std::promise<void>, std::future<size_t>> camera::render_screen_2(scre
         ++r;
         size_t sx = x * adt::pixel_size + std::uniform_int_distribution<>(0, square_size * adt::pixel_size - 1)(gen);
         size_t sy = y * adt::pixel_size + std::uniform_int_distribution<>(0, square_size * adt::pixel_size - 1)(gen);
-        color_rgb c = get_pixel(double(sx) / adt::pixel_size, double(sy) / adt::pixel_size, s);
+        color_rgb c = get_pixel_d(double(sx) / adt::pixel_size, double(sy) / adt::pixel_size, s);
         adt::square s = {.score = 1000000000, .x=x * adt::pixel_size, .y=y * adt::pixel_size, .size=square_size * adt::pixel_size, .sx=sx, .sy=sy, .color=c};
         s.draw(scr, wire);
         pq.push(s);
       }
-    constexpr int thread_num = 1;
+    constexpr int thread_num = 16;
     adt::square outs[thread_num*4];
     std::future<void> trs[thread_num];
-    while ( !pq.empty() ) {
+    while ( true ) {
       if (is_ready(fut)) {
         std::cerr << "early exit!" << std::endl;
         break;
       }
-//      int ts = 0;
-//      for(int i=0;i<thread_num;++i){
-//        while(!pq.empty() && !pq.top().splittable())pq.pop();
-//        if(pq.empty())break;
-//        std::async(adt::split,pq.top(),gen,[this, &s](double sx, double sy) {
-//          return get_pixel(sx / adt::pixel_size, sy / adt::pixel_size, s);
-//        },nullptr,nullptr);
-//
-//        pq.pop();
-//        ++ts;
-//      }
-
-      auto sq = pq.top();
-      pq.pop();
-      if (!sq.splittable())continue;
-      //std::cerr << "splitting score: " << sq.score << std::endl;
-      adt::square sons[4];
-      adt::split(sq,gen, [this, &s](double sx, double sy) {
-        return get_pixel(sx / adt::pixel_size, sy / adt::pixel_size, s);
-      },sons,sons+4);
-      r+=3;
-      for(auto &s : sons)s.draw(scr,wire);
-      //scr.flush();
-      for(auto &s : sons)pq.push(s);
+      int ts = 0;
+      for(int i=0;i<thread_num;++i){
+        while(!pq.empty() && !pq.top().splittable())pq.pop();
+        if(pq.empty())break;
+        trs[i] = std::async(adt::split<adt::square*>,pq.top(),this,&s,outs+i*4,outs+i*4+4);
+        pq.pop();
+        ++ts;
+        r+=3;
+      }
+      if(ts==0)return r;
+      for(int i=0;i<ts;++i)trs[i].wait();
+      for(int i=0;i<ts*4;++i){
+        outs[i].draw(scr,wire);
+        pq.push(outs[i]);
+      }
       //std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
     return r;

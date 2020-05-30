@@ -110,12 +110,12 @@ int main_2() {
 
     constexpr double move_amt = 0.01;
     if(inp==24 || inp==9)break;
-    else if(inp==90)c.position += c.depth*move_amt;
-    else if(inp==84)c.position -= c.depth*move_amt;
-    else if(inp==83)c.position += c.depth.cross(c.vertical)*move_amt;
-    else if(inp==85)c.position -= c.depth.cross(c.vertical)*move_amt;
-    else if(inp==88)c.position += c.vertical*move_amt;
-    else if(inp==80)c.position -= c.vertical*move_amt;
+    else if(inp==90)c.position -= c.depth*move_amt;
+    else if(inp==84)c.position += c.depth*move_amt;
+    else if(inp==83)c.position -= c.depth.cross(c.vertical)*move_amt;
+    else if(inp==85)c.position += c.depth.cross(c.vertical)*move_amt;
+    else if(inp==88)c.position -= c.vertical*move_amt;
+    else if(inp==80)c.position += c.vertical*move_amt;
     else if(inp==113 || inp==114){
       double p = angle;
       if(inp==114)p*=-1;
