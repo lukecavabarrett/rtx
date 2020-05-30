@@ -5,6 +5,7 @@
 #include <vector>
 #include "typedefs.h"
 #include <math.h>
+#include <future>
 
 namespace rtx{
 class camera
@@ -19,8 +20,11 @@ public:
     camera(const vector3& p,const vector3& d,const vector3& v, int w,int h,dtype f = 45.0,int b = 2);
     ray3 cast_ray(int x, int y);
     ray3 cast_ray(dtype x, dtype y);
-    color_rgb get_pixel(int x, int y, const scene& s);
-    void render_screen(screen& scr, const scene& s);
+  color_rgb get_pixel(int x, int y, const scene& s);
+  color_rgb get_pixel(double x, double y, const scene& s);
+  void render_screen(screen& scr, const scene& s);
+  void render_screen_adaptive(screen& scr, const scene& s);
+  std::tuple<std::promise<void>,std::future<size_t>> render_screen_2(screen& scr, const scene& s,bool wire=false,size_t rays=1000);
 };
 
 };
