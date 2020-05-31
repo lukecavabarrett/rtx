@@ -20,10 +20,11 @@ class scene;
 class screen;
 class camera;
 class sphere;
+class plane;
 template<typename T> class solid_color;
 class light;
 class sun_light;
-template<typename T> class phong_color;
+template<typename T,typename Tex1,typename Tex2> class phong_color;
 template<typename T> class reflect;
 };
 

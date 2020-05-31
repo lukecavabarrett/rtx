@@ -7,6 +7,7 @@
 //include all .h files
 #include "vector3.h"
 #include "vector4.h"
+#include "texture.h"
 #include "color_rgb.h"
 #include "ray3.h"
 #include "scene_object.h"
@@ -14,6 +15,7 @@
 #include "screen.h"
 #include "camera.h"
 #include "sphere.h"
+#include "plane.h"
 #include "solid_color.h"
 #include "light.h"
 #include "sun_light.h"

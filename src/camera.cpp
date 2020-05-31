@@ -46,8 +46,8 @@ void camera::render_screen(screen &scr, const scene &s) {
   for (int y = 0; y < height_px; y++) {
     for (int x = 0; x < width_px; x++) {
 
-      scr.put_pixel(x, y, get_pixel(x, y, s).tonemap().to_rgb_le());
-      //*(int *)i = ((x>200)?(color_rgb<D>::from_rgb(0x333333)):(color_rgb<D>(0))).tonemap().to_rgb_le();
+      scr.put_pixel(x, y, get_pixel(x, y, s).tonemap().to_rgb());
+      //*(int *)i = ((x>200)?(color_rgb<D>::from_rgb(0x333333)):(color_rgb<D>(0))).tonemap().to_rgb();
     }
     //if(y%10==0 || y==height_px-1)fprintf(stderr,"\b\b\b\b\b\b\b\b\b\b\b\b%2.2f%%",((dtype)y+1)*100/height_px);
   }
@@ -64,12 +64,12 @@ void camera::render_screen_adaptive(screen &scr, const scene &s) {
     int rendered_points = 0;
     for (int y = 0; y < height_px; y += square_size) {
       for (int x = 0; x < width_px; x += square_size) {
-        auto c = get_pixel(x, y, s).tonemap().to_rgb_le();
+        auto c = get_pixel(x, y, s).tonemap().to_rgb();
         rendered_points++;
         for (int yp = y; yp < std::min(y + square_size, height_px); ++yp)
           for (int xp = x; xp < std::min(x + square_size, width_px); ++xp)
             scr.put_pixel(xp, yp, c);
-        //*(int *)i = ((x>200)?(color_rgb<D>::from_rgb(0x333333)):(color_rgb<D>(0))).tonemap().to_rgb_le();
+        //*(int *)i = ((x>200)?(color_rgb<D>::from_rgb(0x333333)):(color_rgb<D>(0))).tonemap().to_rgb();
       }
     }
     assert(((width_px + square_size - 1) / square_size) * ((height_px + square_size - 1) / square_size) == rendered_points);
@@ -93,8 +93,8 @@ struct square {
   void draw(screen &scr, bool wire = false) const {
     assert(size >= pixel_size);
     //draw
-    scr.put_rectangle(x / pixel_size, y / pixel_size, size / pixel_size, size / pixel_size, color.tonemap().to_rgb_le());
-    //scr.put_pixel(x/pixel_size,y/pixel_size,color.tonemap().to_rgb_le());
+    scr.put_rectangle(x / pixel_size, y / pixel_size, size / pixel_size, size / pixel_size, color.tonemap().to_rgb());
+    //scr.put_pixel(x/pixel_size,y/pixel_size,color.tonemap().to_rgb());
     //bounding box
     if (wire)scr.put_rectangle(x / pixel_size, y / pixel_size, size / pixel_size, size / pixel_size, 0xffd300, false);
 
@@ -181,7 +181,7 @@ std::tuple<std::promise<void>, std::future<size_t>> camera::render_screen_2(scre
         outs[i].draw(scr,wire);
         pq.push(outs[i]);
       }
-      //std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      //std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     return r;
   });
@@ -200,9 +200,9 @@ std::tuple<std::promise<void>, std::future<size_t>> camera::render_screen_2(scre
     for(int x=0;x<width_px;x++,i+=3)
     {
 
-        *(int *)i = get_pixel(x,y,s).tonemap().to_rgb_le();
+        *(int *)i = get_pixel(x,y,s).tonemap().to_rgb();
         if(x==0 && y%10==0)fprintf(stderr,"%f %%\n",((D)y+1)*100/height_px);
-        //*(int *)i = ((x>200)?(color_rgb<D>::from_rgb(0x333333)):(color_rgb<D>(0))).tonemap().to_rgb_le();
+        //*(int *)i = ((x>200)?(color_rgb<D>::from_rgb(0x333333)):(color_rgb<D>(0))).tonemap().to_rgb();
     }
     }
     lodepng_encode24_file(filename.c_str(),tmp_mem,width_px,height_px);

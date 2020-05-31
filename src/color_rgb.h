@@ -4,7 +4,7 @@
 #include "typedefs.h"
 #include <iostream>
 namespace rtx{
-class color_rgb : public vector3
+class color_rgb : public vector3,texture
 {
 public:
     using vector3::vector3;
@@ -19,7 +19,8 @@ public:
     //color_rgb (dtype r,dtype g,dtype b);
     int to_rgb() const;
     static color_rgb from_rgb(int w);
-    int to_rgb_le() const; 
+    color_rgb get_color(const vector3& v) const;
+    int to_rgb_le() const;
     const vector3& to_vec() const;
     color_rgb tonemap() const;
     friend std::ostream& operator<<(std::ostream& os, const color_rgb& v);

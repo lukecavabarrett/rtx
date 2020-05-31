@@ -5,17 +5,21 @@
 #include "rtx.h"
 
 namespace rtx{
-    template<typename T>
+    template<typename T,typename Texture1,typename Texture2>
     class phong_color : public scene_object {
-        static_assert(std::is_base_of<scene_object, T>::value, "T must derive from scene_object");
+      static_assert(std::is_base_of<scene_object, T>::value, "T must derive from scene_object");
+      static_assert(std::is_base_of<texture, Texture1>::value, "Texture must derive from texture");
+      static_assert(std::is_base_of<texture, Texture2>::value, "Texture must derive from texture");
     private:
         T internal;
-        color_rgb color_ambient,color_diffuse,color_specular;
+      Texture1 color_ambient;
+      Texture2 color_diffuse;
+        color_rgb color_specular;
         dtype alpha;
     public:
         
     template <typename... Ts>
-    phong_color(const color_rgb& a,const color_rgb& d,const color_rgb& s,dtype alp,Ts&&... args) : internal(std::forward<Ts>(args)...),color_ambient(a),color_diffuse(d),color_specular(s),alpha(alp) {} ;
+    phong_color(const Texture1& a,const Texture2& d,const color_rgb& s,dtype alp,Ts&&... args) : internal(std::forward<Ts>(args)...),color_ambient(a),color_diffuse(d),color_specular(s),alpha(alp) {} ;
     
     virtual vector3 get_normal_at(const vector3& v) const override {
         return internal.get_normal_at(v);
@@ -31,7 +35,8 @@ namespace rtx{
     
     virtual color_rgb trace(const vector3& p,const ray3& r,const scene& s,int bounces=0) const override {
         //ambient component
-        color_rgb c=color_ambient*s.ambient_color;
+        vector3 mp = internal.get_mapping_at(p);
+        color_rgb c=color_ambient.get_color(mp)*s.ambient_color;
         //for each light
         vector3 n = get_normal_at(p);
         vector3 vw = -r.d;
@@ -40,7 +45,7 @@ namespace rtx{
             if(il.magnitude2()<eps)continue;
             vector3 vl = -(l->get_incident_at(p));
             //diffuse component
-            c+=il*color_diffuse*std::max<dtype>(0,n.dot(vl));
+            c+=il*color_diffuse.get_color(mp)*std::max<dtype>(0,n.dot(vl));
             //specular component
             vector3 vr = n*(n.dot(vl))*2 - vl;
             vr.normalise();

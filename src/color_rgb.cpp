@@ -1,4 +1,6 @@
 #include "rtx.h"
+#include "color_rgb.h"
+
 #include <cstdlib>
 #include <cmath>
 #include <iomanip>
@@ -45,5 +47,8 @@ std::ostream& operator<<(std::ostream& os, const color_rgb& v)
 {
     os << '#' << std::setfill('0') << std::setw(6) << std::uppercase << std::hex << v.to_rgb();
     return os;
+}
+color_rgb color_rgb::get_color(const vector3 &v) const {
+  return *this;
 }
 };

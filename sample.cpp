@@ -78,23 +78,28 @@ int main() {
 
 int main_2() {
   XInitThreads();
+
+
   //for(int y=0;y<w.size_y();y++)for(int x=0;x<w.size_x();x++)w.put_pixel(y,x,x^y);
   rtx::scene s(rtx::color_rgb(0.1), rtx::color_rgb(0.01));
   constexpr int W = 4*256,H=3*256;
   rtx::screen w(W, H);
-  typedef rtx::reflect<rtx::phong_color<rtx::sphere>> refsphere;
+  typedef rtx::reflect<rtx::phong_color<rtx::sphere,rtx::color_rgb,rtx::color_rgb>> refsphere;
+  typedef rtx::solid_color<rtx::sphere> solsphere;
   //s.add(new rtx::solid_color<rtx::sphere>(rtx::color_rgb::from_rgb(0x5500ff),rtx::vector3(0.55,-0.16, 3.5),0.5));
-  s.add(new refsphere(0.8, rtx::color_rgb::from_rgb(0xff000) * 0.2, rtx::color_rgb::from_rgb(0xff000) * 0.08, rtx::color_rgb(0.1), 20.0, rtx::vector3(0.00, 0.16, 4.5), 0.3));
-  s.add(new refsphere(0.6, rtx::color_rgb::from_rgb(0x0000ff) * 0.2, rtx::color_rgb::from_rgb(0x0000ff) * 0.08, rtx::color_rgb(0.1), 20.0, rtx::vector3(0.55, -0.16, 3.5), 0.5));
-  s.add(new refsphere(0.6, rtx::color_rgb::from_rgb(0x0000ff) * 0.2, rtx::color_rgb::from_rgb(0x0000ff) * 0.08, rtx::color_rgb(0.1), 20.0, rtx::vector3(2.55, 0.16, 3.5), 0.5));
-  s.add(new refsphere(0.6, rtx::color_rgb::from_rgb(0x0000ff) * 0.2, rtx::color_rgb::from_rgb(0x0000ff) * 0.08, rtx::color_rgb(0.1), 20.0, rtx::vector3(-0.55, -0.16, 5.5), 0.5));
+  s.add(new refsphere(0.4, rtx::color_rgb::from_rgb(0xff0000) * 0.2, rtx::color_rgb::from_rgb(0xff0000) * 0.08, rtx::color_rgb(0.1), 20.0, rtx::vector3(0.00, 0.16, 4.5), 0.3));
+  s.add(new refsphere(0.3, rtx::color_rgb::from_rgb(0xffd300) * 0.4, rtx::color_rgb::from_rgb(0xffd300) * 0.08, rtx::color_rgb(0.1), 20.0, rtx::vector3(0.55, -0.16, 3.5), 0.5));
+  s.add(new refsphere(0.3, rtx::color_rgb::from_rgb(0x0000ff) * 0.2, rtx::color_rgb::from_rgb(0x0000ff) * 0.08, rtx::color_rgb(0.1), 20.0, rtx::vector3(2.55, 0.16, 3.5), 0.5));
+  s.add(new rtx::reflect<rtx::phong_color<rtx::sphere,rtx::grid_texture,rtx::grid_texture>>(0.6, rtx::grid_texture(0.5,0.1), rtx::grid_texture(0.1,0.1), rtx::color_rgb(0.1), 20.0, rtx::vector3(-0.55, -0.16, 5.5), 0.5));
   s.add(new rtx::sun_light(rtx::vector3(0.5, -2, 1), rtx::color_rgb(1)));
   s.add(new rtx::sun_light(rtx::vector3(-3, -2, 1), rtx::color_rgb(1)));
+  typedef rtx::phong_color<rtx::plane,rtx::grid_texture,rtx::grid_texture> refplane;
+  s.add(new refplane(rtx::grid_texture(1),rtx::grid_texture(1),rtx::color_rgb(0.1),20.0,rtx::vector3{0.0,-4.0,0.0},rtx::vector3{0.0,1.0,0.0}));
   rtx::camera c(rtx::vector3(0,0,0), rtx::vector3(0, 0, 1), rtx::vector3(0, 1, 0), W, H, 45.0, 5);
 
   bool wire=false;
   size_t rays = 1000000;
-  rtx::screen control_screen(20,20);
+  rtx::screen control_screen(200,200);
   while(true){
     auto [stop,wait] = c.render_screen_2(w, s,wire,rays);
 
@@ -125,13 +130,19 @@ int main_2() {
       c.depth.x = sin_p*z+cos_p*x;
       c.depth.normalise();
     } else if(inp==25)wire^=1;
+    else if(inp==45){
+      //refsphere &obj = *dynamic_cast<refsphere*>(s.objects().at(1));
+      //obj.internal.color_ambient = 0;
+    }
     //else if(inp==20){if(rays>2)rays>>=1;}
     //else if(inp==21){if(rays<100000)rays<<=1;}
   }
+  return 0;
 }
 
 int main(){
   main_2();
+  return 0;
 }
 
 template<typename R>
@@ -175,6 +186,7 @@ int main_3() {
   //stop.set_value();
   wait.wait();
   //main_2();
+  return 0;
 }
 
 /*

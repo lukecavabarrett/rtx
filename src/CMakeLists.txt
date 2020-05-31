@@ -2,7 +2,6 @@ project(rtx)
 set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB glob_SRC
-        "*.h"
         "*.cpp"
         )
 add_library(${PROJECT_NAME} STATIC ${glob_SRC})
