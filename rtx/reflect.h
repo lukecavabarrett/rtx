@@ -1,5 +1,5 @@
-#ifndef _INCLUDE_TRANSPARENT_H_
-#define _INCLUDE_TRANSPARENT_H_
+#ifndef _INCLUDE_REFLECT_H_
+#define _INCLUDE_REFLECT_H_
 
 #include <iostream>
 #include "rtx.h"
@@ -32,6 +32,7 @@ namespace rtx{
         
         if(bounces){
             vector3 n = get_normal_at(p);
+            if(n.dot(r.d)>0)n=-n;
             vector3 vr = r.d - n*(n.dot(r.d))*2;
             vr.normalise();
             ray3 ref(p+vr*eps,vr);

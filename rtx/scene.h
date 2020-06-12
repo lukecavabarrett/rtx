@@ -3,9 +3,10 @@
 
 #include <iostream>
 #include <vector>
-#include "typedefs.h"
+#include "rtx.h"
 
 namespace rtx{
+class light;
     class scene{
         std::vector<scene_object*> obj_vp;
         std::vector<light*> lgt_vp;

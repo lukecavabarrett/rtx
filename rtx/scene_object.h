@@ -2,9 +2,10 @@
 #define _INCLUDE_SCENE_OBJECT_H_
 
 #include <iostream>
-#include "typedefs.h"
+#include "types.h"
 
 namespace rtx{
+class scene;
     class scene_object{
     public:
     virtual bool is_in(const vector3& v) const;

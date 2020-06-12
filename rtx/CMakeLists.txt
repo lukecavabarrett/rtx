@@ -1,10 +1,9 @@
 project(rtx)
 set(CMAKE_CXX_STANDARD 17)
-
-file(GLOB glob_SRC
-        "*.cpp"
-        )
-add_library(${PROJECT_NAME} STATIC ${glob_SRC})
+set(CMAKE_CXX_FLAGS -std=c++2a)
+set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-O3 -Wall -Wextra")
+add_library(${PROJECT_NAME} STATIC vector2.cc vector3.cc color.cc screen.cc)
 
 target_link_libraries(${PROJECT_NAME}
         PRIVATE
@@ -25,5 +24,5 @@ target_include_directories(${PROJECT_NAME}
 
 target_compile_features(${PROJECT_NAME}
         PRIVATE
-        cxx_std_11
+        cxx_std_17
         )

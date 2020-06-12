@@ -1,7 +1,7 @@
 #ifndef _INCLUDE_VECTOR4_H_
 #define _INCLUDE_VECTOR4_H_
 
-#include "typedefs.h"
+#include "types.h"
 #include <iostream>
 namespace rtx{
 class vector4

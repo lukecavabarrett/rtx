@@ -2,7 +2,7 @@
 #define _INCLUDE_RAY3_H_
 
 #include <iostream>
-#include "typedefs.h"
+#include "types.h"
 namespace rtx{
 class ray3
 {

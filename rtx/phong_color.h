@@ -39,6 +39,7 @@ namespace rtx{
         color_rgb c=color_ambient.get_color(mp)*s.ambient_color;
         //for each light
         vector3 n = get_normal_at(p);
+        if(n.dot(r.d)>0)n=-n;
         vector3 vw = -r.d;
         for(light* l:s.lights()){
             color_rgb il = l->illuminate(s,this,p);

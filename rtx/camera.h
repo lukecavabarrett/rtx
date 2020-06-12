@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include "typedefs.h"
+#include "types.h"
 #include <math.h>
 #include <future>
 
@@ -25,6 +25,9 @@ public:
   void render_screen(screen& scr, const scene& s);
   void render_screen_adaptive(screen& scr, const scene& s);
   std::tuple<std::promise<void>,std::future<size_t>> render_screen_2(screen& scr, const scene& s,bool wire=false,size_t rays=1000);
+  std::tuple<std::promise<void>,std::future<size_t>> render_screen_3(screen& scr, const scene& s);
+  std::tuple<std::promise<void>,std::future<size_t>> render_screen_4(screen& scr, const scene& s,bool wire=false);
+  std::tuple<std::promise<void>,std::future<size_t>> render_screen_5(screen& scr, const scene& s,bool wire=false);
 };
 
 };

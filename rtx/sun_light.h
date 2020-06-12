@@ -1,7 +1,7 @@
 #ifndef _INCLUDE_SUN_LIGHT_H_
 #define _INCLUDE_SUN_LIGHT_H_
 
-#include "typedefs.h"
+#include "types.h"
 
 namespace rtx{
     class sun_light : public light {

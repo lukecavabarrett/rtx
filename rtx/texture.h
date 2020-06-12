@@ -1,13 +1,15 @@
 #ifndef SAMPLE_SRC_TEXTURE_H_
 #define SAMPLE_SRC_TEXTURE_H_
 
-#include "typedefs.h"
+#include "types.h"
 
 namespace rtx{
 class texture{
  public:
   //color_rgb get_color(const vector3& v) const;
 };
+
+class color_rgb;
 
 class grid_texture : public texture {
  public:
