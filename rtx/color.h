@@ -35,11 +35,10 @@ struct basic_rgb_color{
  public:
   constexpr basic_rgb_color() : data(0) {}
   constexpr basic_rgb_color(field_t c) : data(c) {}
+  constexpr basic_rgb_color(field_t r,field_t g,field_t b) : data((r<<(channel_depth*2)) | (g<<channel_depth) | b){}
   constexpr basic_rgb_color(const basic_rgb_color&) = default;
   constexpr basic_rgb_color(basic_rgb_color&&) = default;
-  constexpr basic_rgb_color(const color&) {
-
-  }
+  constexpr basic_rgb_color(const color& c) : data(from_color(c)) {}
   constexpr basic_rgb_color& operator=(const basic_rgb_color&) noexcept = default;
   constexpr basic_rgb_color& operator=(basic_rgb_color&&)  noexcept = default;
 };

@@ -128,7 +128,7 @@ int main_2() {
 
   //for(int y=0;y<w.size_y();y++)for(int x=0;x<w.size_x();x++)w.put_pixel(y,x,x^y);
   rtx::scene s(rtx::color_rgb(0.1), rtx::color_rgb(0.01));
-  constexpr int W = 4*256,H=3*256;
+  constexpr int W = 2560,H=1440;
   rtx::screen w(W, H);
   scene_1(s);
   rtx::camera c(rtx::vector3(0,0,0), rtx::vector3(0, 0, 1), rtx::vector3(0, 1, 0), W, H, 45.0, 4);
